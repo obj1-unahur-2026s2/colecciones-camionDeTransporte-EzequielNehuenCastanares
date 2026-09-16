@@ -1,6 +1,8 @@
 object knightRider{
     method peso() = 500
     method peligrosidad() = 10
+    method sufreLasConsecuencias(){}
+    method bultosQueOcupa()=1
 }
 
 object bumblebee {
@@ -14,7 +16,11 @@ object bumblebee {
 
     method peso() = 800
 
+    method sufreLasConsecuencias(){
+      self.transformar(robot)
+    }
 
+    method bultosQueOcupa()=2
 }
 
 object robot {
@@ -35,6 +41,26 @@ object paqueteDeLadrillos {
     }
 
     method peligrosidad() = 2
+
+    method sufreLasConsecuencias(){
+      cantidadDeLadrillos += 12
+    }
+
+    method bultosQueOcupa(){
+      if(self.hasta100()){
+        return 1
+      }
+      else if(self.entre101Y300()){
+        return 2
+      }
+      else{
+        return 3
+      }
+    }
+
+    method hasta100() = cantidadDeLadrillos <= 100
+    method entre101Y300() = cantidadDeLadrillos.between(101, 300)
+    method mayorA300() = cantidadDeLadrillos > 300
 }
 
 object arenaAGranel {
@@ -47,6 +73,11 @@ object arenaAGranel {
     } 
 
     method peligrosidad() = 1
+
+    method sufreLasConsecuencias(){
+      peso = (peso-10).max(0)
+    }
+    method bultosQueOcupa()=1    
 }
 
 object bateriaAntiaerea {
@@ -61,6 +92,11 @@ object bateriaAntiaerea {
 
   method peligrosidad() = if(estaConMisiles) 100 else 0
 
+  method sufreLasConsecuencias(){
+    estaConMisiles = true
+  }
+
+  method bultosQueOcupa() = if(estaConMisiles) 2 else 1
 }
 
 object contenedorPortuario {
@@ -79,6 +115,15 @@ object contenedorPortuario {
 
   method peligrosidad() = if(cosas.isEmpty()) 0 else cosas.map({c => c.peligrosidad()}).max()
 
+  method sufreLasConsecuencias(){
+    cosas.map({c => c.sufreLasConsecuencias()})
+  }
+
+  method bultosQueOcupa(){
+    1 + cosas.sum({c => c.bultosQueOcupa()})
+  }
+
+  method queCosa()= cosas
 }
   
 
@@ -92,6 +137,11 @@ object residuosRadioactivos {
   }
 
   method peligrosidad() = 200
+
+  method sufreLasConsecuencias(){
+    peso += 15
+  }
+  method bultosQueOcupa()=1
 }
 
 object embalajeDeSeguridad {
@@ -104,5 +154,9 @@ object embalajeDeSeguridad {
   method peso() = cosaAdentro.peso()
 
   method peligrosidad() = cosaAdentro.peligrosidad()/2
+
+  method sufreLasConsecuencias(){}
+
+  method bultosQueOcupa()=2
   
 }

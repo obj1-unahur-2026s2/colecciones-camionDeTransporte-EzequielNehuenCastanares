@@ -1,13 +1,17 @@
 import cosas.*
 object camion {
     const cosas = []
+    var cantidadDeBultos = 0
 
     method cargarUnaCosa(unaCosa){
         cosas.add(unaCosa)
+        unaCosa.sufreLasConsecuencias()
+        cantidadDeBultos += unaCosa.bultosQueOcupa()
     }
 
     method descargarUnaCosa(unaCosa){
         cosas.remove(unaCosa)
+        cantidadDeBultos -= unaCosa.bultosQueOcupa()
     }
 
     method peso(){
@@ -46,4 +50,5 @@ object camion {
 
     method cosaMasPesada() = cosas.max({c => c.peso()})
 
+    method cantidadDeBultosCargados() = cantidadDeBultos
 }

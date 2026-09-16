@@ -1,0 +1,30 @@
+import camion.*
+import cosas.*
+
+describe "grupo de test para camion y cosas segunda parte"{
+ 
+ test "Se carga en el camion un knightRider, arenaAGranel, bumblebee y embalajeDeSeguridad y se comprueba que el camión tiene 6 cantidadDeBultos ocupada" {
+    camion.cargarUnaCosa(knightRider)
+    camion.cargarUnaCosa(arenaAGranel)
+    camion.cargarUnaCosa(bumblebee)
+    camion.cargarUnaCosa(embalajeDeSeguridad)
+    assert.equals(6, camion.cantidadDeBultosCargados())
+ }
+
+ test "Se carga en el camion arenaAGranel, se comprueba que arenaAGranel ahora pesa 0" {
+    camion.cargarUnaCosa(arenaAGranel)
+    assert.equals(0, arenaAGranel.peso())
+ }
+
+ test "Se carga en el camion paqueteDeLadrillos y se comprueba que paqueteDeLadrillos ahora tiene 26" {
+    camion.cargarUnaCosa(paqueteDeLadrillos)
+    assert.equals(26, paqueteDeLadrillos.peso())
+ }
+
+ test "Se carga en el camion un contenedor portuario que tiene una baeteria antiaerea y se comprueba que esta pesa 300" {
+    contenedorPortuario.agregarCosa(bateriaAntiaerea)
+    camion.cargarUnaCosa(contenedorPortuario)
+    assert.equals(300, bateriaAntiaerea.peso())
+ }
+
+}
