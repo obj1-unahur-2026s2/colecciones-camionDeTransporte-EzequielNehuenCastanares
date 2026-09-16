@@ -1,9 +1,138 @@
+import cosas.*
 import camion.*
 
-describe "group of test for camion" {
+describe "Se cargará al camión con bumblebee como robot, arenaAGranel con 150kg, bateriaAntiaerea con misiles puestos y embalajeDeSeguridad poiendole como contenido el paqueteDeLadrillos con 80 ladrillos" {
 
-  test "first test" {
-    assert.that(true)
+  test "Su peso es 2410" {
+    bumblebee.transformar(robot)
+    arenaAGranel.cambiarPeso(150)
+    bateriaAntiaerea.cambiarMisiles()
+    paqueteDeLadrillos.cantidadDeLadrillos(80)
+    embalajeDeSeguridad.cambiarCosaAdentro(paqueteDeLadrillos)
+    camion.cargarUnaCosa(bumblebee)
+    camion.cargarUnaCosa(arenaAGranel)
+    camion.cargarUnaCosa(bateriaAntiaerea)
+    camion.cargarUnaCosa(embalajeDeSeguridad)
+    assert.equals(2410, camion.peso())
   }
+
+  test "Se comprueba que todos sus pesos son pares" {
+    bumblebee.transformar(robot)
+    arenaAGranel.cambiarPeso(150)
+    bateriaAntiaerea.cambiarMisiles()
+    paqueteDeLadrillos.cantidadDeLadrillos(80)
+    embalajeDeSeguridad.cambiarCosaAdentro(paqueteDeLadrillos)
+    camion.cargarUnaCosa(bumblebee)
+    camion.cargarUnaCosa(arenaAGranel)
+    camion.cargarUnaCosa(bateriaAntiaerea)
+    camion.cargarUnaCosa(embalajeDeSeguridad)
+    assert.that(camion.losPesosSonPares())
+  }
+
+  test "Se comprueba que alguna cosa pesa 300" {
+    bumblebee.transformar(robot)
+    arenaAGranel.cambiarPeso(150)
+    bateriaAntiaerea.cambiarMisiles()
+    paqueteDeLadrillos.cantidadDeLadrillos(80)
+    embalajeDeSeguridad.cambiarCosaAdentro(paqueteDeLadrillos)
+    camion.cargarUnaCosa(bumblebee)
+    camion.cargarUnaCosa(arenaAGranel)
+    camion.cargarUnaCosa(bateriaAntiaerea)
+    camion.cargarUnaCosa(embalajeDeSeguridad)
+    assert.that(camion.algunaCosaPesa_(300))
+  }
+
+  test "Retorna los objetos que tienen un nivel de peligrosidad mayor a 10 que son bumblebee y bateriaAntiaerea" {
+    bumblebee.transformar(robot)
+    arenaAGranel.cambiarPeso(150)
+    bateriaAntiaerea.cambiarMisiles()
+    paqueteDeLadrillos.cantidadDeLadrillos(80)
+    embalajeDeSeguridad.cambiarCosaAdentro(paqueteDeLadrillos)
+    camion.cargarUnaCosa(bumblebee)
+    camion.cargarUnaCosa(arenaAGranel)
+    camion.cargarUnaCosa(bateriaAntiaerea)
+    camion.cargarUnaCosa(embalajeDeSeguridad)
+    assert.equals([bumblebee,bateriaAntiaerea], camion.cosasQueTienenUnNivelDePeligrosidadMayorA(10))
+  }
+
+  test "Se comprueba que no hay cosas que superen el nivel de peligrosidad de residuosRadioactivos" {
+    bumblebee.transformar(robot)
+    arenaAGranel.cambiarPeso(150)
+    bateriaAntiaerea.cambiarMisiles()
+    paqueteDeLadrillos.cantidadDeLadrillos(80)
+    embalajeDeSeguridad.cambiarCosaAdentro(paqueteDeLadrillos)
+    camion.cargarUnaCosa(bumblebee)
+    camion.cargarUnaCosa(arenaAGranel)
+    camion.cargarUnaCosa(bateriaAntiaerea)
+    camion.cargarUnaCosa(embalajeDeSeguridad)
+    assert.equals([],camion.cosasQueSuperanNivelDePeligrosidadDe(residuosRadioactivos))
+  }
+
+  test "Se comprueba que el camion no excede el peso máximo" {
+    bumblebee.transformar(robot)
+    arenaAGranel.cambiarPeso(150)
+    bateriaAntiaerea.cambiarMisiles()
+    paqueteDeLadrillos.cantidadDeLadrillos(80)
+    embalajeDeSeguridad.cambiarCosaAdentro(paqueteDeLadrillos)
+    camion.cargarUnaCosa(bumblebee)
+    camion.cargarUnaCosa(arenaAGranel)
+    camion.cargarUnaCosa(bateriaAntiaerea)
+    camion.cargarUnaCosa(embalajeDeSeguridad)
+    assert.notThat(camion.estaExcedidoDelPesoMaximo())
+  }
+
+  test "Se comprueba que alguna cosa cargada en el camión supera el nivel de peligrosidad 8" {
+    bumblebee.transformar(robot)
+    arenaAGranel.cambiarPeso(150)
+    bateriaAntiaerea.cambiarMisiles()
+    paqueteDeLadrillos.cantidadDeLadrillos(80)
+    embalajeDeSeguridad.cambiarCosaAdentro(paqueteDeLadrillos)
+    camion.cargarUnaCosa(bumblebee)
+    camion.cargarUnaCosa(arenaAGranel)
+    camion.cargarUnaCosa(bateriaAntiaerea)
+    camion.cargarUnaCosa(embalajeDeSeguridad)
+    assert.that(camion.algunaCosaSuperaElSiguienteNivelDePeligrosidad(8))
+  }
+
+  test "Se comprueba que puede circular en ruta siendo que ninguna cosa supera el nivel de peligrosidad 100" {
+    bumblebee.transformar(robot)
+    arenaAGranel.cambiarPeso(150)
+    bateriaAntiaerea.cambiarMisiles()
+    paqueteDeLadrillos.cantidadDeLadrillos(80)
+    embalajeDeSeguridad.cambiarCosaAdentro(paqueteDeLadrillos)
+    camion.cargarUnaCosa(bumblebee)
+    camion.cargarUnaCosa(arenaAGranel)
+    camion.cargarUnaCosa(bateriaAntiaerea)
+    camion.cargarUnaCosa(embalajeDeSeguridad)
+    assert.that(camion.puedeCircularEnRuta(100))
+  }
+
+  test "Se comprueba que tiene cargada una cosa que pesa entre 1 y 300" {
+    bumblebee.transformar(robot)
+    arenaAGranel.cambiarPeso(150)
+    bateriaAntiaerea.cambiarMisiles()
+    paqueteDeLadrillos.cantidadDeLadrillos(80)
+    embalajeDeSeguridad.cambiarCosaAdentro(paqueteDeLadrillos)
+    camion.cargarUnaCosa(bumblebee)
+    camion.cargarUnaCosa(arenaAGranel)
+    camion.cargarUnaCosa(bateriaAntiaerea)
+    camion.cargarUnaCosa(embalajeDeSeguridad)
+    assert.that(camion.tieneCosaQuePesaEntre_Y_(1,300))
+  }
+
+  test "Se comprueba que la cosa más pesada que tiene cargada es bumblebee" {
+    bumblebee.transformar(robot)
+    arenaAGranel.cambiarPeso(150)
+    bateriaAntiaerea.cambiarMisiles()
+    paqueteDeLadrillos.cantidadDeLadrillos(80)
+    embalajeDeSeguridad.cambiarCosaAdentro(paqueteDeLadrillos)
+    camion.cargarUnaCosa(bumblebee)
+    camion.cargarUnaCosa(arenaAGranel)
+    camion.cargarUnaCosa(bateriaAntiaerea)
+    camion.cargarUnaCosa(embalajeDeSeguridad)
+    assert.equals(bumblebee, camion.cosaMasPesada())
+  }
+
+
 
 }
